@@ -1,0 +1,34 @@
+.title {
+    text-align: center;
+    color: #fff;
+}
+
+.form {
+    background-color: green;
+    margin: 0 auto;
+    border: 1px seagreen solid;
+    max-width: 300px;
+    max-height: 300px;
+}
+
+.formGroup {
+    color: #fff;
+    margin-left: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+
+.button {
+    text-align: center;
+    margin: 0 auto;
+    display: flex;
+    align-items: center; /* вирівнювання по вертикалі */
+    cursor: pointer;
+    margin-bottom: 20px;
+    color: green;
+}
