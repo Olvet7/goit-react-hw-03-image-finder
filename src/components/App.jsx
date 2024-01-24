@@ -25,8 +25,6 @@ class App extends Component {
         <ImageGallery searchText={this.state.searchText}/>
         <ToastContainer autoClose={3000}/>
         {/* <Loader /> */}
-        {/* <Button />
-        <Modal /> */}
       </div>
     )
   }
