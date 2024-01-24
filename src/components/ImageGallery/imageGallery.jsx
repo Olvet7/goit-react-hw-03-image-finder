@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import PropTypes from 'prop-types';
 import css from './ImageGallery.module.css';
 import ImageGalleryItem from 'components/ImageGalleryItem'; 
-import Button from "./Button";
+// import Button from "./Button";
 
 class ImageGallery extends Component {
     state = {
@@ -89,7 +89,7 @@ class ImageGallery extends Component {
                                 largeImageURL={image.largeImageURL}
                             />
                         ))}
-                        <Button /> 
+                        {/* <Button />  */}
                     </ul>
                 </div>
             );

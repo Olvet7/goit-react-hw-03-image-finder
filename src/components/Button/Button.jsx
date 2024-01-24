@@ -1,7 +1,7 @@
-const Button = () => {
-    render (
-        <button type="button">Load More</button>
-    )
-}
+// const Button = () => {
+//     render (
+//         <button type="button">Load More</button>
+//     )
+// }
 
-export default Button;
+// export default Button;
