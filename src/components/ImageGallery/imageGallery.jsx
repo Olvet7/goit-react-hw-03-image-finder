@@ -1,108 +1,46 @@
-import React, {Component} from 'react';
-import { getImages } from 'components/api/images';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import PropTypes from 'prop-types';
-import css from './ImageGallery.module.css';
-import ImageGalleryItem from 'components/ImageGalleryItem'; 
-// import Button from "./Button";
+import { Component, useState, useEffect } from "react";
 
-class ImageGallery extends Component {
-    state = {
-        images: null,
-        status: 'idle'
-    }
+import { getAllPosts } from "../../api/posts";
 
-    componentDidUpdate(prevProps, _) {
-        console.log(this.props);
-        if(prevProps.searchText !== this.props.searchText) {
-            this.setState({status: 'pending'})
+import styles from "./posts.module.css";
 
-            getImages(this.props.searchText)
-            // .then((response) => response.json())
-            // .then((data) => this.setState({images: data.hits}))
+const Posts = () => {
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-            .then(response => {
-                if (!response.ok) {
-                    this.setState({status: 'rejected'})
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => this.setState({status: 'resolved', images: data.hits}))
-            .catch(error => {
-                // Обробка помилок
-                this.setState({status: 'rejected'})
-                toast.error('😥 Error fetching data! Please try again', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    })
-            });;
-        }        
-    }
-
-    render() {
-        const {images, status} = this.state;
-
-        if (status === 'idle') {
-                return "Enter your search request"
+    useEffect(()=> {        
+        const fetchPosts = async ()=> {
+            try {
+                setLoading(true);
+                const {data} = await getAllPosts();
+                setPosts(data?.length ? data : []);
             }
-
-        if (status === 'pending'){
-            return <>
-                <p>Loading...</p>
-            </>
+            catch(error) {
+                setError(error.message);
+            }
+            finally {
+                setLoading(false);
+            }
         }
 
-        if (status === 'rejected'){
-            return (
-                toast.error('😥 Error fetching data! Please try again', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    })
-            )
-        
-        }
+        fetchPosts();
+    }, []);
 
-        if (status === 'resolved') {
-            return (
-                <div>
-                    <p>Ахуєнно</p>
-                    <ul className={css.gallery}>
-                    {images.map(image => (
-                            <ImageGalleryItem
-                                keyProp={image.id}
-                                tags={image.tags}
-                                webformatURL={image.webformatURL}
-                                largeImageURL={image.largeImageURL}
-                            />
-                        ))}
-                        {/* <Button />  */}
-                    </ul>
-                </div>
-            );
-        }
+    const elements = posts.map(({ id, title, body }) => (<li key={id} className={styles.item}>
+        <h3>{title}</h3>
+        <p>{body}</p>
+    </li>));
+
+    return (
+        <>
+            {error && <p className={styles.error}>{error}</p>}
+            {loading && <p>...Loading</p>}
+            {Boolean(elements.length) && (<ul className={styles.list}>
+                {elements}
+            </ul>)}
+        </>
+    )
 }
 
-static propTypes = {
-    searchText: PropTypes.string.isRequired,
-};
-
-}
-
-export default ImageGallery;
-
-
-
+export default Posts;

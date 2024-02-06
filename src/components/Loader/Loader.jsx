@@ -1,9 +1,5 @@
-// const Loader = {
-//     render() {
-//         return (
-//             <span class="loader"></span>
-//         )
-//     }
-// }
+const Loader = () => {
+    return <span className="loader"></span>
+}
 
-// export default Loader;
+export default Loader;

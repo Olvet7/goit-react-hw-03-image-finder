@@ -1,14 +1,17 @@
-import css from './ImageGalleryItem.module.css'
+import css from './ImageGalleryItem.module.css';
 
-const ImageGalleryItem = ({ keyProp, tags, webformatURL, largeImageURL}) => {
-    return (
-        <> 
-        <li className={css.ImageGalleryItem} id={keyProp}>
-            <img className={css.ImageGalleryItemImage} src={webformatURL} alt={`${tags} `}/>
-            <p>{tags}</p>
-        </li>
-        </>
-    )
-}
-
-export default ImageGalleryItem;
+export const ImageGalleryItem = ({ id, smallUrl, tags, onClickImageItem }) => (
+  <div
+    className={css.gallery}
+    key={id}
+    data-id={id}
+    onClick={onClickImageItem}
+  >
+    <img
+      className={css.imageGalleryItemImg}
+      src={smallUrl}
+      alt={tags}
+      data-id={id}
+    />
+  </div>
+);  
